@@ -10,10 +10,15 @@ import {
   Apps,
   FileCopy,
   ExpandLess,
+  ExpandMore,
+  Add,
 } from "@material-ui/icons";
 import styled from "styled-components";
 import SidebarOption from "./SidebarOption";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { db } from "../firebase";
 function Sidebar() {
+  const [channels, loading, error] = useCollection(db.collection("rooms"));
   return (
     <SidebarContainer>
       <SidebarHeader>
@@ -35,6 +40,14 @@ function Sidebar() {
       <SidebarOption Icon={Apps} title="Apps" />
       <SidebarOption Icon={FileCopy} title="File Browser" />
       <SidebarOption Icon={ExpandLess} title="Showless" />
+      <hr />
+      <SidebarOption Icon={ExpandMore} title="Channels" />
+      <hr />
+      <SidebarOption Icon={Add} addChannelOption title="Add Channels" />
+
+      {channels?.docs.map((doc) => (
+        <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} />
+      ))}
     </SidebarContainer>
   );
 }
@@ -48,6 +61,11 @@ const SidebarContainer = styled.div`
   border-top: 1px solid #49274b;
   max-width: 260px;
   //   margin-top: 60px;
+  > hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #49274b;
+  }
 `;
 
 const SidebarHeader = styled.div`

@@ -5,17 +5,18 @@ import Home from "./Home";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import styled from "styled-components";
+import Chat from "./components/Chat";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <BrowserRouter>
         <>
           <Header />
           <AppBody>
-            <Sidebar/>
+            <Sidebar />
             <Routes>
-              <Route exact path="/" />
+              <Route exact path="/" element={<Chat />} />
             </Routes>
           </AppBody>
         </>
@@ -27,6 +28,6 @@ function App() {
 export default App;
 
 const AppBody = styled.div`
-  display:flex;
-  height:100vh;
+  display: flex;
+  height: 100vh;
 `;
